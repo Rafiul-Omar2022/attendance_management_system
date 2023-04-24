@@ -21,7 +21,23 @@ void frontInterface();
 int loginAccess(char name[], char password[]);
 void about();
 int login();
+void append();
+void display();
+void takeAttendance();
+void search();
+void reset_All();
+void resetDays();
+void update();
+void userPage();
 
+
+int main(){
+
+    asciiImg();
+    frontInterface();
+
+    return 0;
+}
 
 void append(){
     FILE *fp;
@@ -47,7 +63,6 @@ void append(){
     fclose(fp);
 }
 
-
 void display(){
     db person;
     FILE *fp = fopen("database.txt", "r");
@@ -56,6 +71,7 @@ void display(){
 
     system("cls");
     asciiImg();
+
     printf("%9s|\t%12s|\t|1 |2 |3 |4 |5 |6 |7 |8 |9 |10 |11 |12 |13 |14 |15 |16 |17 |18 |19 |20 |21 |22 |23 |24 |25 |26 |27 |28 |29 |30  %s \n","ID","Name","Days");
 
     while(fread(&person, sizeof(db), 1, fp)){
@@ -80,7 +96,6 @@ void display(){
     fclose(fp);
     printf("\n\t\t\t\t\t\tTotal person: %d", totalPerson);
 }
-
 
 void takeAttendance(){
     db person;
@@ -130,7 +145,6 @@ void takeAttendance(){
 
 }
 
-
 void search(){
     db person;
     FILE *fp;
@@ -175,7 +189,6 @@ void search(){
     fclose(fp);
     printf("\n\n");
 }
-
 
 void reset_All(){
     FILE *fp, *fp1;
@@ -239,8 +252,13 @@ void update(){
             found = 1;
             printf("\nEnter 1 for present, and 0 for absent\n");
             printf("Input: ");
-            scanf("%d", &person.day[day-1]);
+            scanf("%d", &person.day[day-1] );
         }
+                int totalDays = 0;
+                for(int i=0; i<CLASS_COUNT; i++) {
+                    if(person.day[i] == 1) totalDays += person.day[i];
+                }
+                person.attendance = totalDays;
         fwrite(&person, sizeof(db), 1, fp1);
     }
     fclose(fp);
@@ -268,15 +286,15 @@ void userPage(){
     point:
     system("cls");
     asciiImg();
-    printf("\n\t1. Entry new people\n");
-    printf("\t2. Take attendance\n");
-    printf("\t3. Update attendance\n");
-    printf("\t4. View people\n");
-    printf("\t5. Search people\n");
-    printf("\t6. Reset days\n");
-    printf("\t7. Reset All\n");
-    printf("\t0. Go back\n");
-    printf("\nEnter ( 0 - 5 ) to operate. \n\nInput: ");
+    printf("\n\t1. Entry new people\n\n");
+    printf("\t2. Take attendance\n\n");
+    printf("\t3. Update attendance\n\n");
+    printf("\t4. View people\n\n");
+    printf("\t5. Search people\n\n");
+    printf("\t6. Reset days\n\n");
+    printf("\t7. Reset All\n\n");
+    printf("\t0. Go back\n\n");
+    printf("\nEnter ( 0 - 7 ) to operate. \n\nInput: ");
     scanf("%d", &n);
 
     switch(n){
@@ -327,16 +345,6 @@ void userPage(){
         }
 }
 
-
-int main(){
-
-    asciiImg();
-    frontInterface();
-
-
-    return 0;
-}
-
 void frontInterface(){
 
     int n;
@@ -345,9 +353,9 @@ void frontInterface(){
     system("cls");
     asciiImg();
 
-    printf("\t1. Login\n");
-    printf("\t2. About\n");
-    printf("\t0. Exit\n");
+    printf("\t1. Login\n\n");
+    printf("\t2. About\n\n");
+    printf("\t0. Exit\n\n");
 
     printf("\nEnter ( 0 - 2 ) to operate. \n\nInput: ");
     scanf("%d", &n);
@@ -414,9 +422,20 @@ void about(){
     asciiImg();
 
     int n;
-    printf("\n\t\tWelcome to about page: ");
-    printf("\n\t\t");
-
+    printf("\n\t\t\t\t\t\t\t\t\tWelcome to about page: ");
+    printf("\n\t\t\n\n");
+    printf("%40s%60s%15s\n", "||","--------------------------------------------","||");
+     printf("%40s%60s%15s\n", "||"," ","||");
+    printf("%40s%59s%16s\n", "||","Project Name: Attendance Management System.","||");
+    printf("%40s%60s%15s\n", "||"," ","||");
+    printf("%40s%-60s%15s\n", "||","                Features: Login, Create, Update, view.","||");
+    printf("%40s%-60s%15s\n", "||","                          ACII Img.","||");
+     printf("%40s%60s%15s\n", "||"," ","||");
+    printf("%40s%-60s%15s\n", "||","                Created: Rafiul Omar Rafi.","||");
+     printf("%40s%60s%15s\n", "||"," ","||");
+    printf("%40s%-60s%15s\n", "||","                Date: 24/04/2023.","||");
+     printf("%40s%60s%15s\n", "||"," ","||");
+    printf("%40s%60s%15s\n", "||","--------------------------------------------","||");
     printf("\n\n\tPress 0 to go back.");
     printf("\n\nInput: ");
     scanf("%d", &n);
