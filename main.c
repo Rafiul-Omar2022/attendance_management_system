@@ -303,6 +303,8 @@ void userPage(){
             break;
         case 1:
             append();
+            printf("\nPress any number/character to continue.....");
+            scanf(" %s", any);
             userPage();
             break;
         case 2:
@@ -380,6 +382,8 @@ void frontInterface(){
 
 int login(){
 
+    char any[20];
+
     system("cls");
     asciiImg();
     char userName[50];
@@ -393,12 +397,25 @@ int login(){
     printf("\n\t\tPassword: ");
     scanf(" %[^\n]s", &userPass);
 
-    if( loginAccess(userName, userPass) ){
-        //loadingScreen();
-        //printf("Access");
+    if( loginAccess(userName, userPass) == 1 ){
         userPage();
     }
+    else if( loginAccess(userName, userPass) == -1 ){
+        printf("\nPassWord invalid!\n");
+        printf("\nPress any number/character to continue.....");
+        scanf(" %s", any);
+        frontInterface();
+    }
+    else if( loginAccess(userName, userPass) == -2 ){
+        printf("\nUserName invalid!\n");
+        printf("\nPress any number/character to continue.....");
+        scanf(" %s", any);
+        frontInterface();
+    }
     else{
+        printf("\nUserName & Password both invalid!\n");
+        printf("\nPress any number/character to continue.....");
+        scanf(" %s", any);
         frontInterface();
     }
 
@@ -407,13 +424,9 @@ int login(){
 
 int loginAccess( char name[], char password[] ){
      if( !strcmp(name, USER_NAME ) && !strcmp(password, USER_PASS) ) return 1;
+     else if( (!strcmp(name, USER_NAME ) == 1) && (!strcmp(password, USER_PASS) == 0) ) return -1;
+     else if( (!strcmp(name, USER_NAME ) == 0) && (!strcmp(password, USER_PASS) == 1) ) return -2;
      else return 0;
-}
-
-void loadingScreen(){
-    for(int i=0,j=0; i<1000000000; i++){
-        j = i;
-    }
 }
 
 void about(){
