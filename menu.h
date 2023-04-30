@@ -14,7 +14,7 @@ void frontInterface(){
 
         switch(n){
         case 0:
-            exit(1);
+            exit(0);
             break;
         case 1:
             login();
